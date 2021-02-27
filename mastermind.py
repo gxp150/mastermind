@@ -1,6 +1,8 @@
 # Master Mind
 # Implemented GIT
 
+import sys
+import random
 
 """
 MasterMind 44
@@ -33,13 +35,24 @@ class Game:
         print("(E) Exit")
         print()
         print("**********************************************************")
-        print("Enter your choice [Press A, B, C, D, or E]")
+        print("Enter your choice [Press A, B, C, D, or E]\n")
+    
+        # Get the user's choice (THINK THIS MIGHT GO BEFORE ENTER YOUR CHOICE)
+        choice = input(": ")
+
+        # Validate the choice.
+        
+        while choice.lower not in [A, B, C, D, E]:
+            choice = int(input('Enter a valid choice [Press A, B, C, D, or E]: '))
+
+        # return the user's choice.
+        return choice
 
 
 class MasterMind:
     pass
 
-class MasterMind44:
+class MasterMind44(MasterMind):
     pass
 
 # This could be displayed in Game methods yet to decide
@@ -47,20 +60,70 @@ class Board:
     pass
 
 class Players:
-    pass
+    def __init__(self, playerName, playerScore, playerRole):
+        self.playerName = playerName         
+        self._playerScore = None         
+        self.playerRole = True         
+        
+    # Create the setters outline our constraints
+    def set_playerName(self, playerName):
+        self.playerName = playerName
+        
+    def set_playerScore(self, playerScore):
+        if playerScore >= 0:
+            self.__playerScore = playerScore
+        else:
+            raise Exception("Error: score can not be anything other than number")
+
+    def set_playerRole(self):
+        pass 
+        # if choice is master mind 2 player 
+        # then player role rotates between code maker and code breaker
+        # else code maker is computer
+
+        # if choice is master mind 44
+        # then player is 1, 2, 3, or 4
+        # and computer provides the hints and holds the clue created
 
 class CodeMaker:
-    pass
+    def __init__(self):
+        pass
+
+    def computerCode(self):
+        # Computer creates a random code
+        code = []
+        code_length = 4 
+        peg_colours = ["Red", "Green", "Blue", "Cyan", "Magenta", "Yellow"] 
+        for peg in range(0, code_length):
+            code.append(random.choice(peg_colours))
+        return code
 
 class CodeBreaker:
-    pass
+    def __init__(self):
+        pass
 
+# This can be with Computer or CodeMaker
 class RevealCode:
     pass
 
+# This might be best inside CodeBreaker
 class MakeGuess:
+    def __init__(self, guess):
+        self.guess = guess   
+        self.__guessCount = None 
+
+    # Create the setters with validation
+
+
+    
+
+
+        # we will need to set a counter to count how many guesses 
+        # Easy = 12 guesses, Medium = 8 guesses, Hard = 6 Guesses
+
     pass
 
+# This can be with Computer or CodeMaker
 class Hint:
     pass
 
@@ -70,4 +133,6 @@ class Hint:
 
 
 # Call to display
-Game.display_menu()
+print(Game.display_menu)
+
+#sys.exit()
