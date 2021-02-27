@@ -2,6 +2,7 @@
 # Implemented GIT
 
 import sys
+import os
 import random
 
 """
@@ -15,16 +16,9 @@ And show the results same as MasterMind
 The first player to get it is the winner
 """
 
-print("""
-Welcome to Mastermind!
-This game has been developed by Rhonda Jorgensen
-For the course UO Programming Fundamentals SP1 2021
-
- """)
-
 # Create our classes
 class Game:
-    pass
+    # pass
     # displayMenu
     def display_menu(self):
         print("Select which game you want to play?")
@@ -35,18 +29,38 @@ class Game:
         print("(E) Exit")
         print()
         print("**********************************************************")
-        print("Enter your choice [Press A, B, C, D, or E]\n")
+        print("Enter your choice [Press A, B, C, D, or E]: \n")
     
         # Get the user's choice (THINK THIS MIGHT GO BEFORE ENTER YOUR CHOICE)
         choice = input(": ")
 
         # Validate the choice.
+        if choice.lower == "a":
+            player1 = input("Player 1: What is your name: ")
+            player2 = print(input("Player 2: What is your name: "))
         
-        while choice.lower not in [A, B, C, D, E]:
-            choice = int(input('Enter a valid choice [Press A, B, C, D, or E]: '))
+        elif choice.lower == "b":
+            player1 = input("Player 1: What is your name: ")
 
-        # return the user's choice.
-        return choice
+        elif choice.lower == "c":
+            print("Sorry this game is not available, try another option")
+            return choice
+
+        elif choice.lower == "d":
+            player1 = print(input("Player 1: What is your name: "))
+            player2 = print(input("Player 2: What is your name: "))
+            player3 = print(input("Player 1: What is your name: "))
+            player4 = print(input("Player 2: What is your name: "))
+
+        elif choice.lower == "e":
+            print("Goodbye")
+            sys.exit()
+        
+        # Capture any other options entered
+        # Possibly enter validation errors for integers here so programme doesnt crash
+        else:
+            print("You must enter a choice from A to E only")
+            return choice
 
 
 class MasterMind:
@@ -128,11 +142,18 @@ class Hint:
     pass
 
 
+def main():
+    print("Welcome to " + os.path.basename(__file__))
+    print("This game has been developed by Rhonda Jorgensen")
+    print("For the course UO Programming Fundamentals SP1 2021\n")
+    
+    # Call to display
+    game = Game()
+    choice = game.display_menu()
 
+    print("woo got through the menu!")
 
+if __name__ == '__main__':
+    main()
 
-
-# Call to display
-print(Game.display_menu)
-
-#sys.exit()
+    sys.exit()
