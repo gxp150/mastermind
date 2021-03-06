@@ -33,26 +33,35 @@ class Game:
     
         # Get the user's choice (THINK THIS MIGHT GO BEFORE ENTER YOUR CHOICE)
         choice = input(": ")
+        
 
         # Validate the choice.
-        if choice.lower == "a":
+        if choice.lower() == "a":
             player1 = input("Player 1: What is your name: ")
             player2 = print(input("Player 2: What is your name: "))
         
-        elif choice.lower == "b":
+        elif choice.lower() == "b":
             player1 = input("Player 1: What is your name: ")
+            
+            mmgame = MasterMindComputer(player1)
+            mmgame.play()
+            
+            # list my instructions here for this version of the game
+            # implement each step
 
-        elif choice.lower == "c":
+
+
+        elif choice.lower() == "c":
             print("Sorry this game is not available, try another option")
             return choice
 
-        elif choice.lower == "d":
+        elif choice.lower() == "d":
             player1 = print(input("Player 1: What is your name: "))
             player2 = print(input("Player 2: What is your name: "))
             player3 = print(input("Player 1: What is your name: "))
             player4 = print(input("Player 2: What is your name: "))
 
-        elif choice.lower == "e":
+        elif choice.lower() == "e":
             print("Goodbye")
             sys.exit()
         
@@ -62,9 +71,36 @@ class Game:
             print("You must enter a choice from A to E only")
             return choice
 
+# Create SuperClassMasterMind the games will draw from
+# List your common elements here
 
-class MasterMind:
+
+
+class MasterMind():
     pass
+
+class MasterMindComputer():
+    # start here
+    def __init__(self, player1):
+        self.player = player1
+        print("Welcome ", player1, "\nYou are the codebreaker for this game")
+        print("You need to break the Code that consists of four pegs.")
+        print("Each peg can be of the colour (R)ed, (B)lue, (G)reen, (Y)ellow, (M)agenta, or (C)yan.")
+        print("Break the Code by specifying four characters where each character indicates a colour as above")
+        print("For example, BYRG represents the code Blue Yellow Red Green")
+        print("Feeback will be provided on your attemped Code")
+        print("Black peg means there is a peg in your Code with correct colour and correct order.")
+        print("White peg means there is a peg in your code with correct colour but incorrect order")
+        print("You will get 12 attempts to break the code")
+        print("Good Luck!")
+        # create version of game here
+        
+    def play(self):
+        # Now code the game
+        # list all the instructions and build out
+        # replicate and modify for the other parts
+        pass
+
 
 class MasterMind44(MasterMind):
     pass
@@ -73,11 +109,11 @@ class MasterMind44(MasterMind):
 class Board:
     pass
 
-class Players:
-    def __init__(self, playerName, playerScore, playerRole):
+class Player:
+    def __init__(self, playerName):
         self.playerName = playerName         
-        self._playerScore = None         
-        self.playerRole = True         
+        self._playerScore = 0         
+        #self.playerRole = True         
         
     # Create the setters outline our constraints
     def set_playerName(self, playerName):
@@ -151,9 +187,9 @@ def main():
     game = Game()
     choice = game.display_menu()
 
-    print("woo got through the menu!")
+    #print("woo got through the menu!")
 
 if __name__ == '__main__':
     main()
 
-    sys.exit()
+    #sys.exit()
