@@ -10,7 +10,7 @@ import random
 
 class Game:
     """
-    The Game Class 
+    The Game Class
 
     We create the Game class so that we can display
     the menu for the user to choose from.
@@ -46,7 +46,7 @@ class MasterMind():
     The MasterMind Class
 
     This class will be our Parent Class
-    that the other variations of MasterMind will 
+    that the other variations of MasterMind will
     inherit from.
     """
     pass
@@ -62,7 +62,7 @@ class CodeMaker:
         Generate the random code for the Computer
 
         Parameters:
-        code_length: Restrict code to 4 
+        code_length: Restrict code to 4
 
         Returns:
         code: Random generated code for the Codebreaker to Crack
@@ -130,6 +130,7 @@ class MasterMindComputer():
                     white = white + 1
                 # else:
                     # raise TypeError("Please enter a peg colour from the range supplied")
+                    # Minimum 4 - 3 breaks the game currently as does a digit
 
             print("Feedback #", attempts + 1, ":")
 
@@ -150,21 +151,33 @@ class MasterMindComputer():
 
 
 class MasterMind44(MasterMind):
+    """
+    MasterMind 44
+
+    Each player is assigned a position to allocate a colour to
+    There will be 5 positions
+    So I guess one can be blank or assigned by the computer
+    Then each player has a guess, they will know the position of their own pin colour
+    The computer will respond having gathered all the pins retrieved by each player
+    And show the results same as MasterMind 
+    The first player to get it is the winner
+    """
     # start here
+
     def __init__(self):
         # Will need to ask for the 4 player names
-        print(
-            "Welcome to MasterMind44! The computer will create the secret code and reveal")
+        print("Welcome to MasterMind44!")
+        print("The computer will create the secret code and reveal")
         print("four pegs of the five positions one-by-one individually to each player.")
         print("During revealing each position, only the requested player should look at the screen")
         print("Each peg can be of the colour (R)ed, (B)lue, (G)reen, (Y)ellow, (M)agenta, or (C)yan.")
         print("[", player1, "] When you are read for one position of the code to be revealed on the screen press <enter>")
         # create version of game here
+
     pass
 
+
 # This could be displayed in Game methods yet to decide
-
-
 class Board:
     pass
 
@@ -250,8 +263,10 @@ def main():
     choice = game.display_menu()
 
     if choice.lower() == "a":
-        player1 = input("Player 1: What is your name? ")
-        player2 = input("Player 2: What is your name? ")
+        print("Sorry this game is not available, try another option")
+        choice = game.display_menu()
+        # player1 = input("Player 1: What is your name? ")
+        # player2 = input("Player 2: What is your name? ")
 
     elif choice.lower() == "b":
         player1 = input("Player 1: What is your name? ")
@@ -261,12 +276,15 @@ def main():
 
     elif choice.lower() == "c":
         print("Sorry this game is not available, try another option")
+        choice = game.display_menu()
 
     elif choice.lower() == "d":
-        player1 = input("Player 1: What is your name? ")
-        player2 = input("Player 2: What is your name? ")
-        player3 = input("Player 3: What is your name? ")
-        player4 = input("Player 4: What is your name? ")
+        print("Sorry this game is not available, try another option")
+        choice = game.display_menu()
+        # player1 = input("Player 1: What is your name? ")
+        # player2 = input("Player 2: What is your name? ")
+        # player3 = input("Player 3: What is your name? ")
+        # player4 = input("Player 4: What is your name? ")
 
     elif choice.lower() == "e":
         print("Goodbye")
