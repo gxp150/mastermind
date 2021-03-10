@@ -5,23 +5,19 @@ import sys
 import os
 import random
 
-"""
-MasterMind 44
-Each player is assigned a position to allocate a colour to
-There will be 5 positions
-So I guess one can be blank or assigned by the computer
-Then each player has a guess, they will know the position of their own pin colour
-The computer will respond having gathered all the pins retrieved by each player
-And show the results same as MasterMind 
-The first player to get it is the winner
-
-"""
+# Create our skeleton using our UML
 
 
-# Create our classes
 class Game:
+    """
+    The Game Class 
+
+    We create the Game class so that we can display
+    the menu for the user to choose from.
+   """
     # pass
     # displayMenu
+
     def display_menu(self):
         print("*********************************************************")
         print("Select which game you want to play?")
@@ -44,8 +40,17 @@ class Game:
 # Create SuperClassMasterMind the games will draw from
 # List your common elements here
 
+
 class MasterMind():
+    """
+    The MasterMind Class
+
+    This class will be our Parent Class
+    that the other variations of MasterMind will 
+    inherit from.
+    """
     pass
+
 
 class CodeMaker:
     def __init__(self):
@@ -53,18 +58,32 @@ class CodeMaker:
 
     # Computer creates a random code
     def computerCode(self, code_length):
+        """
+        Generate the random code for the Computer
+
+        Parameters:
+        code_length: Restrict code to 4 
+
+        Returns:
+        code: Random generated code for the Codebreaker to Crack
+        """
+
         code = []
-        
-        peg_colours = {"R": "Red", "B": "Blue", "G": "Green", "Y": "Yellow", "M": "Magenta", "C": "Cyan"}
+
+        peg_colours = {"R": "Red", "B": "Blue", "G": "Green",
+                       "Y": "Yellow", "M": "Magenta", "C": "Cyan"}
 
         for peg in range(code_length):
             code.append(random.choice(list(peg_colours.keys())))
         # Testing code
-        #print(code)
+        # print(code)
         return code
 
+
 class MasterMindComputer():
-    # start here
+    # Create the MasterMind Computer Version - Option B
+    # List all the instructions and build out
+    # Replicate and modify for the other parts
     def __init__(self, player1):
         self.player = player1
         print("Welcome ", player1)
@@ -79,8 +98,6 @@ class MasterMindComputer():
         print("You will get 12 attempts to break the code.")
         print("Good luck!")
 
-        # create version of game here 
-
     def play(self, player1):
         maker = CodeMaker()
         breaker = CodeBreaker()
@@ -92,12 +109,13 @@ class MasterMindComputer():
 
         guess = []
 
-        peg_colours = {"R": "Red", "B": "Blue", "G": "Green", "Y": "Yellow", "M": "Magenta", "C": "Cyan"}
+        peg_colours = {"R": "Red", "B": "Blue", "G": "Green",
+                       "Y": "Yellow", "M": "Magenta", "C": "Cyan"}
 
         for attempts in range(max_attempts):
             black = 0
             white = 0
-            
+
             guess = breaker.getGuess(player1)
 
             print("Attempt #", attempts + 1, ":")
@@ -110,9 +128,8 @@ class MasterMindComputer():
                     black = black + 1
                 elif guess[n] in code:
                     white = white + 1
-                #else:
-                    #raise TypeError("Please enter a peg colour from the range supplied")
-                
+                # else:
+                    # raise TypeError("Please enter a peg colour from the range supplied")
 
             print("Feedback #", attempts + 1, ":")
 
@@ -126,19 +143,18 @@ class MasterMindComputer():
                 break
 
         if guess == ''.join(code):
-            print("Congratulations ", player1, "! You have broken the Code in ", attempts + 1, " attempts.")
+            print("Congratulations ", player1,
+                  "! You have broken the Code in ", attempts + 1, " attempts.")
         else:
-            print("Computer wins...")
-            
-        # Now code the game
-        # list all the instructions and build out
-        # replicate and modify for the other parts
+            print("Better luck next time, [", player1, "] , Computer WINS!")
+
 
 class MasterMind44(MasterMind):
     # start here
     def __init__(self):
-    # Will need to ask for the 4 player names
-        print("Welcome to MasterMind44! The computer will create the secret code and reveal")
+        # Will need to ask for the 4 player names
+        print(
+            "Welcome to MasterMind44! The computer will create the secret code and reveal")
         print("four pegs of the five positions one-by-one individually to each player.")
         print("During revealing each position, only the requested player should look at the screen")
         print("Each peg can be of the colour (R)ed, (B)lue, (G)reen, (Y)ellow, (M)agenta, or (C)yan.")
@@ -147,28 +163,32 @@ class MasterMind44(MasterMind):
     pass
 
 # This could be displayed in Game methods yet to decide
+
+
 class Board:
     pass
 
+
 class Player:
     def __init__(self, playerName):
-        self.playerName = playerName         
-        self.__playerScore = 0         
-        #self.playerRole = True         
-        
+        self.playerName = playerName
+        self.__playerScore = 0
+        # self.playerRole = True
+
     # Create the setters outline our constraints
     def set_playerName(self, playerName):
         self.playerName = playerName
-        
+
     def set_playerScore(self, playerScore):
         if playerScore >= 0:
             self.__playerScore = playerScore
         else:
-            raise Exception("Error: score can not be anything other than number")
+            raise Exception(
+                "Error: score can not be anything other than number")
 
     def set_playerRole(self):
-        pass 
-        # if choice is master mind 2 player 
+        pass
+        # if choice is master mind 2 player
         # then player role rotates between code maker and code breaker
         # else code maker is computer
 
@@ -176,38 +196,45 @@ class Player:
         # then player is 1, 2, 3, or 4
         # and computer provides the hints and holds the clue created
 
+
 class CodeBreaker:
     def __init__(self):
         pass
 
     def getGuess(self, player1):
-        print("[", player1, "] Enter the Code to break:")
-        guess = input()
-
         # need to validate this is a valid guess
+        try:
+            print("[", player1, "] Enter the Code to break:")
+            guess = input()
+        except (KeyError, ValueError, TypeError):
+            print("You need to enter a colour from the available list")
+            print(
+                "Each peg can be of the colour (R)ed, (B)lue, (G)reen, (Y)ellow, (M)agenta, or (C)yan.")
+            guess = input()
 
         return guess.upper()
-        # Can I count down, once guess count is zero game over
 
-# This might be best inside CodeBreaker
+
 class MakeGuess:
     def __init__(self, guess):
-        self.guess = guess   
-        self.__guessCount = None 
+        self.guess = guess
+        self.__guessCount = None
 
     # Create the setters with validation
-    # we will need to set a counter to count how many guesses 
+    # we will need to set a counter to count how many guesses
     # Easy = 12 guesses, Medium = 8 guesses, Hard = 6 Guesses
 
     pass
 
 # This can be with Computer or CodeMaker
+
+
 class RevealCode:
     pass
 
-
-
 # This can be with Computer or CodeMaker
+
+
 class Hint:
     pass
 
@@ -225,23 +252,29 @@ def main():
     if choice.lower() == "a":
         player1 = input("Player 1: What is your name? ")
         player2 = input("Player 2: What is your name? ")
+
     elif choice.lower() == "b":
         player1 = input("Player 1: What is your name? ")
-        
+
         mmgame = MasterMindComputer(player1)
         mmgame.play(player1)
-        
-        # list my instructions here for this version of the game
-        # implement each step
+
     elif choice.lower() == "c":
         print("Sorry this game is not available, try another option")
+
     elif choice.lower() == "d":
         player1 = input("Player 1: What is your name? ")
         player2 = input("Player 2: What is your name? ")
         player3 = input("Player 3: What is your name? ")
         player4 = input("Player 4: What is your name? ")
+
     elif choice.lower() == "e":
         print("Goodbye")
+
+    # else:
+        # print("Please select a choice from A to E only")
+        # choice = game.display_menu()
+
 
 if __name__ == '__main__':
     main()
