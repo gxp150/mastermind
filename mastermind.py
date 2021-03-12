@@ -49,6 +49,11 @@ class MasterMind():
     that the other variations of MasterMind will
     inherit from.
     """
+    # codemaker = random.choice([player1, player2])
+    # if codemaker = player1:
+    # then codebreaker = player2
+    # else codebreaker = player1
+
     pass
 
 
@@ -76,8 +81,42 @@ class CodeMaker:
         for peg in range(code_length):
             code.append(random.choice(list(peg_colours.keys())))
         # Testing code
-        # print(code)
+        print(code)
         return code
+
+    class MakeGuess:
+        def __init__(self, guess):
+            self.guess = guess
+            self.__guessCount = None
+
+            validate_code(code, length)
+
+    # Create the setters with validation
+    # we will need to set a counter to count how many guesses
+    # Easy = 12 guesses, Medium = 8 guesses, Hard = 6 Guesses
+
+    pass
+
+# This can be with Computer or CodeMaker
+
+
+def validate_code(code, length):
+    valid_code = True
+
+    peg_colours = {"R": "Red", "B": "Blue", "G": "Green",
+                   "Y": "Yellow", "M": "Magenta", "C": "Cyan"}
+
+    if len(code) != length:
+        valid_code = False
+
+    for n in range(len(code)):
+        if code[n].upper() not in list(peg_colours.keys()):
+            valid_code = False
+
+    if valid_code == False:
+        print("Please enter a valid code.")
+
+    return valid_code
 
 
 class MasterMindComputer():
@@ -116,7 +155,7 @@ class MasterMindComputer():
             black = 0
             white = 0
 
-            guess = breaker.getGuess(player1)
+            guess = breaker.getGuess(player1, 4)
 
             print("Attempt #", attempts + 1, ":")
 
@@ -159,7 +198,7 @@ class MasterMind44(MasterMind):
     So I guess one can be blank or assigned by the computer
     Then each player has a guess, they will know the position of their own pin colour
     The computer will respond having gathered all the pins retrieved by each player
-    And show the results same as MasterMind 
+    And show the results same as MasterMind
     The first player to get it is the winner
     """
     # start here
@@ -214,8 +253,20 @@ class CodeBreaker:
     def __init__(self):
         pass
 
-    def getGuess(self, player1):
+    def getGuess(self, player1, length):
         # need to validate this is a valid guess
+
+        valid_code = False
+
+        while valid_code == False:
+            valid_code = True
+
+            print("[", player1, "] Enter the Code to break:")
+            guess = input()
+
+            valid_code = validate_code(guess, length)
+
+        """        
         try:
             print("[", player1, "] Enter the Code to break:")
             guess = input()
@@ -224,22 +275,8 @@ class CodeBreaker:
             print(
                 "Each peg can be of the colour (R)ed, (B)lue, (G)reen, (Y)ellow, (M)agenta, or (C)yan.")
             guess = input()
-
+"""
         return guess.upper()
-
-
-class MakeGuess:
-    def __init__(self, guess):
-        self.guess = guess
-        self.__guessCount = None
-
-    # Create the setters with validation
-    # we will need to set a counter to count how many guesses
-    # Easy = 12 guesses, Medium = 8 guesses, Hard = 6 Guesses
-
-    pass
-
-# This can be with Computer or CodeMaker
 
 
 class RevealCode:
@@ -263,7 +300,7 @@ def main():
     choice = game.display_menu()
 
     if choice.lower() == "a":
-        print("Sorry this game is not available, try another option")
+        print("Sorry this game is not available, try another option\n")
         choice = game.display_menu()
         # player1 = input("Player 1: What is your name? ")
         # player2 = input("Player 2: What is your name? ")
@@ -275,11 +312,11 @@ def main():
         mmgame.play(player1)
 
     elif choice.lower() == "c":
-        print("Sorry this game is not available, try another option")
+        print("Sorry this game is not available, try another option\n")
         choice = game.display_menu()
 
     elif choice.lower() == "d":
-        print("Sorry this game is not available, try another option")
+        print("Sorry this game is not available, try another option\n")
         choice = game.display_menu()
         # player1 = input("Player 1: What is your name? ")
         # player2 = input("Player 2: What is your name? ")
@@ -288,10 +325,6 @@ def main():
 
     elif choice.lower() == "e":
         print("Goodbye")
-
-    # else:
-        # print("Please select a choice from A to E only")
-        # choice = game.display_menu()
 
 
 if __name__ == '__main__':
