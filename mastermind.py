@@ -1,5 +1,6 @@
 # Master Mind
 # Implemented GIT
+# Run git --no-paper log > log.txt
 
 import sys
 import os
@@ -38,7 +39,7 @@ class Game:
         return choice
 
 # Create SuperClassMasterMind the games will draw from
-# List your common elements here
+# List common elements here
 
 
 class MasterMind():
@@ -49,8 +50,10 @@ class MasterMind():
     that the other variations of MasterMind will
     inherit from.
     """
+    # Use random choice to rotate between roles
     # codemaker = random.choice([player1, player2])
     # if codemaker = player1:
+         # code = codeMaker.setCode()
     # then codebreaker = player2
     # else codebreaker = player1
 
@@ -58,8 +61,41 @@ class MasterMind():
 
 
 class CodeMaker:
+    """
+    Generate the code for the other CodeBreaker
+
+    Parameters:
+    code_length: Restrict code to 4
+
+    Returns:
+    code: Code for the Codebreaker to Crack
+    """
+
     def __init__(self):
         pass
+
+    # Player creates a code
+    def setCode(self, code_length):
+
+        # code = []
+
+        # peg_colours = {"R": "Red", "B": "Blue", "G": "Green",
+        #                "Y": "Yellow", "M": "Magenta", "C": "Cyan"}
+
+        # for peg in range(code_length):
+        #     code.append(random.choice(list(peg_colours.keys())))
+        # # Testing code
+        # # print(code)
+        # return code
+            """ returns a validated code """
+        code = input(CODE_PROMPT).split()
+        inputValidationResult = self._validateUserInput(code)
+        self._printUserFriendlyErrorMessage(inputValidationResult)
+        while inputValidationResult is not None:
+            code = input(CODE_PROMPT).split()
+            inputValidationResult = self._validateUserInput(code)
+            self._printUserFriendlyErrorMessage(inputValidationResult)
+        return code
 
     # Computer creates a random code
     def computerCode(self, code_length):
@@ -81,7 +117,7 @@ class CodeMaker:
         for peg in range(code_length):
             code.append(random.choice(list(peg_colours.keys())))
         # Testing code
-        print(code)
+        # print(code)
         return code
 
     class MakeGuess:
@@ -98,6 +134,7 @@ class CodeMaker:
     pass
 
 # This can be with Computer or CodeMaker
+# This is a global Function this is not best practice
 
 
 def validate_code(code, length):
@@ -138,6 +175,7 @@ class MasterMindComputer():
         print("Good luck!")
 
     def play(self, player1):
+        # instance method
         maker = CodeMaker()
         breaker = CodeBreaker()
 
@@ -186,7 +224,10 @@ class MasterMindComputer():
             print("Congratulations ", player1,
                   "! You have broken the Code in ", attempts + 1, " attempts.")
         else:
-            print("Better luck next time, [", player1, "] , Computer WINS!")
+            print(
+                "Better luck next time, [", player1, "] , the code was:", code, "Computer WINS!\n")
+            game = Game()
+            choice = game.display_menu()
 
 
 class MasterMind44(MasterMind):
@@ -201,7 +242,6 @@ class MasterMind44(MasterMind):
     And show the results same as MasterMind
     The first player to get it is the winner
     """
-    # start here
 
     def __init__(self):
         # Will need to ask for the 4 player names
@@ -222,6 +262,19 @@ class Board:
 
 
 class Player:
+    """ 
+    Player Roles
+
+    If Choice is MasterMind 2 player
+    Then Player role rotates between codemaker and codebreaker randomly
+    Else: Codemaker is Computer
+
+    If Choice is MasterMind 44
+    then Player is 1,2,3,4 for CodeBreakers and CodeMakers
+    as they each provide a Peg in a position
+    and Computer holds the code and provides the print
+    """
+
     def __init__(self, playerName):
         self.playerName = playerName
         self.__playerScore = 0
@@ -232,6 +285,7 @@ class Player:
         self.playerName = playerName
 
     def set_playerScore(self, playerScore):
+        # intance method
         if playerScore >= 0:
             self.__playerScore = playerScore
         else:
@@ -239,14 +293,15 @@ class Player:
                 "Error: score can not be anything other than number")
 
     def set_playerRole(self):
-        pass
+        # intance method
         # if choice is master mind 2 player
-        # then player role rotates between code maker and code breaker
-        # else code maker is computer
-
-        # if choice is master mind 44
-        # then player is 1, 2, 3, or 4
-        # and computer provides the hints and holds the clue created
+        # codemaker = random.choice([player1, player2])
+        # if codemaker == player1:
+        #     codebreaker = player2
+        # else:
+        #     codebreaker = player1
+        # return playerRole
+        pass
 
 
 class CodeBreaker:
@@ -254,10 +309,17 @@ class CodeBreaker:
         pass
 
     def getGuess(self, player1, length):
-        # need to validate this is a valid guess
+        # instance method: need to validate this is a valid guess
 
         valid_code = False
-
+        # try:
+        #     print("[", player1, "] Enter the Code to break:")
+        #     guess = input()
+        # except (KeyError, ValueError, TypeError):
+        #     print("You need to enter a colour from the available list")
+        #     print(
+        #         "Each peg can be of the colour (R)ed, (B)lue, (G)reen, (Y)ellow, (M)agenta, or (C)yan.")
+        #     guess = input()
         while valid_code == False:
             valid_code = True
 
@@ -266,16 +328,6 @@ class CodeBreaker:
 
             valid_code = validate_code(guess, length)
 
-        """        
-        try:
-            print("[", player1, "] Enter the Code to break:")
-            guess = input()
-        except (KeyError, ValueError, TypeError):
-            print("You need to enter a colour from the available list")
-            print(
-                "Each peg can be of the colour (R)ed, (B)lue, (G)reen, (Y)ellow, (M)agenta, or (C)yan.")
-            guess = input()
-"""
         return guess.upper()
 
 
@@ -290,7 +342,7 @@ class Hint:
 
 
 def main():
-    # welcome banner
+    # instance method: welcome banner
     print("Welcome to MasterMind!")
     print("This game has been developed by Rhonda Jorgensen")
     print("For the course UO Programming Fundamentals SP1 2021\n")
