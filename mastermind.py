@@ -7,8 +7,6 @@ import os
 import random
 
 # Create our skeleton using our UML
-
-
 class Game:
     """
     The Game Class
@@ -34,7 +32,12 @@ class Game:
         # Validate the choice.
         while choice.lower() not in ["a", "b", "c", "d", "e"]:
             # Get the user's choice (THINK THIS MIGHT GO BEFORE ENTER YOUR CHOICE)
+ 
+                
             choice = input("*Enter your choice [Press A, B, C, D, or E]*\n")
+            if choice.lower() in ["a", "c", "d"]:
+                print("Sorry this game is not available, try another option\n")
+                choice = ''
 
         return choice
 
@@ -76,6 +79,7 @@ class CodeMaker:
 
     # Player creates a code
     def setCode(self, code_length):
+        pass
 
         # code = []
 
@@ -87,7 +91,7 @@ class CodeMaker:
         # # Testing code
         # # print(code)
         # return code
-            """ returns a validated code """
+        """ returns a validated code 
         code = input(CODE_PROMPT).split()
         inputValidationResult = self._validateUserInput(code)
         self._printUserFriendlyErrorMessage(inputValidationResult)
@@ -95,7 +99,7 @@ class CodeMaker:
             code = input(CODE_PROMPT).split()
             inputValidationResult = self._validateUserInput(code)
             self._printUserFriendlyErrorMessage(inputValidationResult)
-        return code
+        return code """
 
     # Computer creates a random code
     def computerCode(self, code_length):
@@ -196,9 +200,15 @@ class MasterMindComputer():
             guess = breaker.getGuess(player1, 4)
 
             print("Attempt #", attempts + 1, ":")
+       
+            guess_colours = guess.upper()
+        
+            for key in peg_colours.keys():
+                guess_colours = guess_colours.replace(key, peg_colours[key].upper() + " ")
+            print(guess_colours)
 
-            for n in range(len(guess)):
-                print(peg_colours[guess[n]].upper())
+            #for n in range(len(guess)):
+                #print(peg_colours[guess[n]].upper())
 
             for n in range(len(code)):
                 if guess[n] == code[n]:
@@ -210,12 +220,18 @@ class MasterMindComputer():
                     # Minimum 4 - 3 breaks the game currently as does a digit
 
             print("Feedback #", attempts + 1, ":")
-
+            
+            feedback_colours = ""
+     
+            
+            
             for n in range(black):
-                print("BLACK")
+                feedback_colours = feedback_colours + "BLACK "
 
             for n in range(white):
-                print("WHITE")
+                feedback_colours = feedback_colours + "WHITE "
+                
+            print(feedback_colours)
 
             if guess == ''.join(code):
                 break
@@ -225,7 +241,7 @@ class MasterMindComputer():
                   "! You have broken the Code in ", attempts + 1, " attempts.")
         else:
             print(
-                "Better luck next time, [", player1, "] , the code was:", code, "Computer WINS!\n")
+                "Better luck next time, [", player1, "] , the code was:", ''.join(code) , " Computer WINS!\n")
             game = Game()
             choice = game.display_menu()
 
@@ -285,12 +301,15 @@ class Player:
         self.playerName = playerName
 
     def set_playerScore(self, playerScore):
-        # intance method
+        # instance method
         if playerScore >= 0:
             self.__playerScore = playerScore
         else:
             raise Exception(
                 "Error: score can not be anything other than number")
+            
+    def add_point(self):
+        self.__playerScore += 1
 
     def set_playerRole(self):
         # intance method
@@ -349,34 +368,43 @@ def main():
 
     # display menu
     game = Game()
-    choice = game.display_menu()
-
-    if choice.lower() == "a":
-        print("Sorry this game is not available, try another option\n")
-        choice = game.display_menu()
-        # player1 = input("Player 1: What is your name? ")
-        # player2 = input("Player 2: What is your name? ")
-
-    elif choice.lower() == "b":
-        player1 = input("Player 1: What is your name? ")
-
-        mmgame = MasterMindComputer(player1)
-        mmgame.play(player1)
-
-    elif choice.lower() == "c":
-        print("Sorry this game is not available, try another option\n")
+    choice = ''
+    while choice.lower() != "e":
+        
         choice = game.display_menu()
 
-    elif choice.lower() == "d":
-        print("Sorry this game is not available, try another option\n")
-        choice = game.display_menu()
-        # player1 = input("Player 1: What is your name? ")
-        # player2 = input("Player 2: What is your name? ")
-        # player3 = input("Player 3: What is your name? ")
-        # player4 = input("Player 4: What is your name? ")
+        if choice.lower() == "a":
+            # Run game mode A once programmed
+            pass
+            #print("Sorry this game is not available, try another option\n")
+            #choice = game.display_menu()
+            # player1 = input("Player 1: What is your name? ")
+            # player2 = input("Player 2: What is your name? ")
 
-    elif choice.lower() == "e":
-        print("Goodbye")
+        elif choice.lower() == "b":
+            player1 = input("Player 1: What is your name? ")
+
+            mmgame = MasterMindComputer(player1)
+            mmgame.play(player1)
+
+        elif choice.lower() == "c":
+            # Run game mode C once programmed
+            pass
+            #print("Sorry this game is not available, try another option\n")
+            #choice = game.display_menu()
+
+        elif choice.lower() == "d":
+            # Run Game Mode D once Programmed
+            pass
+            #print("Sorry this game is not available, try another option\n")
+            #choice = game.display_menu()
+            # player1 = input("Player 1: What is your name? ")
+            # player2 = input("Player 2: What is your name? ")
+            # player3 = input("Player 3: What is your name? ")
+            # player4 = input("Player 4: What is your name? ")
+
+        elif choice.lower() == "e":
+            print("Goodbye")
 
 
 if __name__ == '__main__':
